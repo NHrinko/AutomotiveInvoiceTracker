@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: sans-serif; font-size: 12px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 2px; border-bottom: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h2>Invoice {{ invoice.invoice_number }}</h2>
+    <p>Customer: {{ invoice.customer.name }}</p>
+    <table>
+        <thead>
+            <tr><th>Description</th><th>Hours</th><th>Rate</th><th>Parts</th><th>Tax</th><th>Amount</th></tr>
+        </thead>
+        <tbody>
+        {% for item in invoice.line_items %}
+        <tr>
+          <td>{{ item.description }}</td>
+          <td>{{ item.hours or item.quantity }}</td>
+          <td>{{ item.rate }}</td>
+          <td>{{ item.parts }}</td>
+          <td>{{ item.tax }}%</td>
+          <td>{{ ((item.hours or item.quantity) * item.rate + (item.parts or 0)) * (1 + (item.tax or 0)/100) | round(2) }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <p>Total: {{ invoice.total }}</p>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Helvetica, sans-serif; color: #444; }
+        h1 { color: #1E3A5F; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #f0f0f0; }
+        th, td { border: 1px solid #ccc; padding: 4px; }
+    </style>
+</head>
+<body>
+    <h1>Invoice {{ invoice.invoice_number }}</h1>
+    <p>Customer: {{ invoice.customer.name }}</p>
+    <p>Issued: {{ invoice.issued_date }}</p>
+    <p>Due: {{ invoice.due_date }}</p>
+    <table>
+        <thead>
+            <tr><th>Description</th><th>Hours</th><th>Rate</th><th>Parts</th><th>Tax</th><th>Amount</th></tr>
+        </thead>
+        <tbody>
+        {% for item in invoice.line_items %}
+        <tr>
+          <td>{{ item.description }}</td>
+          <td>{{ item.hours or item.quantity }}</td>
+          <td>{{ item.rate }}</td>
+          <td>{{ item.parts }}</td>
+          <td>{{ item.tax }}%</td>
+          <td>{{ ((item.hours or item.quantity) * item.rate + (item.parts or 0)) * (1 + (item.tax or 0)/100) | round(2) }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <h3>Total: {{ invoice.total }}</h3>
+</body>
+</html>
