@@ -1,0 +1,6 @@
+SQLAlchemy
+Werkzeug
+Jinja2
+WeasyPrint
+reportlab
+Pillow
