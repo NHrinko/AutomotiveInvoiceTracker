@@ -62,7 +62,7 @@ If any provision of this disclaimer is held to be unenforceable, the remainder o
 
 ---
 
-**LAST UPDATED**: [Current Date]
+**LAST UPDATED**: [06/27/2025]
 
 **BY USING THIS SOFTWARE, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO BE BOUND BY THE TERMS OF THIS DISCLAIMER.**
 
