@@ -1,4 +1,4 @@
-# automotive_invoice_manager/ui/invoices/invoice_form.py - FIXED VERSION
+# automotive_invoice_manager/ui/invoices/invoice_form.py
 
 import tkinter as tk
 from tkinter import ttk, messagebox
@@ -13,8 +13,9 @@ except ImportError:
         def __init__(self, master, **kwargs):
             super().__init__(master, **kwargs)
             self._date = date.today()
-            # FIXED: Store parent reference properly
-            self.parent = parent  # <-- ADD THIS LINE
+            # FIXED: Use master instead of undefined parent
+            self.master = master  # <-- FIXED: Was self.parent = parent
+        
         def get_date(self):
             return self._date
         
@@ -31,7 +32,6 @@ logger = logging.getLogger(__name__)
 class InvoiceFormDialog(tk.Toplevel):
     """Dialog for creating and editing invoices with proper customer integration."""
 
-
     def __init__(self, parent, invoice_service, user, customers=None, invoice=None):
         """Initialize invoice form dialog.
         
@@ -44,13 +44,13 @@ class InvoiceFormDialog(tk.Toplevel):
         """
         super().__init__(parent)
         
-        # CRITICAL FIX: Store all parameters as instance attributes
-        self.parent = parent                    # <-- ADD THIS LINE
-        self.invoice_service = invoice_service  # <-- Already exists
-        self.user = user                        # <-- Already exists
-        self.customers = customers or []        # <-- Already exists
-        self.invoice = invoice                  # <-- Already exists
-        self.result = None                      # <-- Already exists
+        # Store all parameters as instance attributes
+        self.parent = parent
+        self.invoice_service = invoice_service
+        self.user = user
+        self.customers = customers or []
+        self.invoice = invoice
+        self.result = None
         
         # Form variables
         self.customer_var = tk.StringVar()
@@ -71,7 +71,6 @@ class InvoiceFormDialog(tk.Toplevel):
         else:
             self.add_line_item()  # Start with one line item
 
-    # 
     def setup_dialog(self):
         """Setup dialog window properties."""
         self.title("Edit Invoice" if self.invoice else "New Invoice")
